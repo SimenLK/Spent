@@ -1,0 +1,19 @@
+mutation CreateTimelog($issuableId: IssuableID!, $timeSpent: String!, $spentAt: Time!, $summary: String!) {
+  timelogCreate(input: {
+    issuableId: $issuableId
+    timeSpent: $timeSpent
+    spentAt: $spentAt
+    summary: $summary
+  }) {
+    timelog {
+      id
+      timeSpent
+      spentAt
+      summary
+      user {
+        username
+      }
+    }
+    errors
+  }
+}

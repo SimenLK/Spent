@@ -1,0 +1,15 @@
+query GetWorkItems {
+  group(fullPath: "oceanbox") {
+    workItems {
+      nodes {
+        id
+        iid
+        title
+        state
+        webUrl
+        createdAt
+        updatedAt
+      }
+    }
+  }
+}
