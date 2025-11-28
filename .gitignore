@@ -3,6 +3,7 @@
 .vs/
 .idea/
 .ionide/
+.direnv/
 obj/
 bin/
 packages/
@@ -16,5 +17,7 @@ deploy/
 dist/
 build/
 *.db
+*.env
 build.fsx.lock
 _*.yaml
+result
