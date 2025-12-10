@@ -5,7 +5,7 @@
     <TargetFramework>net10.0</TargetFramework>
     <AssemblyName>spent</AssemblyName>
     <Version>0.0.1</Version>
-    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     <RuntimeIdentifier>linux-x64</RuntimeIdentifier>
   </PropertyGroup>
   <ItemGroup>

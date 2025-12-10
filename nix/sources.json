@@ -1,10 +1,48 @@
 {
   "pins": {
+    "agenix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "ryantm",
+        "repo": "agenix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "fcdea223397448d35d9b31f798479227e80183f6",
+      "url": "https://github.com/ryantm/agenix/archive/fcdea223397448d35d9b31f798479227e80183f6.tar.gz",
+      "hash": "1d4m7hsq727q7ndjqmgyl8vkbkqjwps962ygmv2mcc5dbqzgn963"
+    },
+    "nix-utils": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "https://git.sr.ht/~mrtz/nix-utils"
+      },
+      "branch": "trunk",
+      "submodules": false,
+      "revision": "098f594425d2b9dde0657becad0f6498d074f8b3",
+      "url": null,
+      "hash": "0hh52w1fkpr1xx6j8cjm6g88j2352yv2ysqm1q51j59y6f583vyb"
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixpkgs-unstable",
-      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre903204.0d59e0290eef/nixexprs.tar.xz",
-      "hash": "0zkhijkc8zn0imixpvmdk2rnp7kwfhad62wn49k2k01m1pg3sr9c"
+      "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.05pre909321.677fbe97984e/nixexprs.tar.xz",
+      "hash": "0i4jyr0xv8i90gxil1s36yqas4qfnp52bwr02fdx90chp31kchzv"
+    },
+    "pre-commit": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "cachix",
+        "repo": "git-hooks.nix"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "548fc44fca28a5e81c5d6b846e555e6b9c2a5a3c",
+      "url": "https://github.com/cachix/git-hooks.nix/archive/548fc44fca28a5e81c5d6b846e555e6b9c2a5a3c.tar.gz",
+      "hash": "055laj9rhlh0dcdhdp0jzv82xh0zp6jf58h274xqqmj3vhyal55f"
     }
   },
   "version": 5

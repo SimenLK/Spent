@@ -2,6 +2,7 @@
   sources ? import ./nix,
   system ? builtins.currentSystem,
   pkgs ? import sources.nixpkgs { inherit system; },
+  nix-utils ? import sources.nix-utils { },
 }:
 let
   snowflaqe = pkgs.buildDotnetGlobalTool (finalAttrs: {
@@ -11,36 +12,72 @@ let
     nugetHash = "sha256-2VSOY3OecRWVWBjWX7Dlba04Iy7Ag84+mBS3vxuxNGk=";
   });
 
-  version = "0.0.1";
+  version =
+    let
+      clean = pkgs.lib.removeSuffix "\n";
+      version = builtins.readFile ./VERSION;
+    in
+    clean version;
 
-  packages.spent = pkgs.buildDotnetModule {
+  dotnet-sdk = pkgs.dotnetCorePackages.sdk_10_0;
+  dotnet-runtime = pkgs.dotnetCorePackages.runtime_10_0;
+  deps = nix-utils.output.lib.nuget.deps;
+
+  spent = pkgs.callPackage ./src {
+    inherit
+      deps
+      dotnet-sdk
+      dotnet-runtime
+      version
+      ;
+  };
+
+  container = pkgs.dockerTools.buildLayeredImage {
     name = "Spent";
-    pname = "spent";
-    version = version;
+    tag = version;
+    created = "now";
 
-    src = pkgs.nix-gitignore.gitignoreSource [ ] ./.;
+    contents = [
+      spent
+      pkgs.busybox
+      pkgs.dockerTools.binSh
+      # pkgs.dockerTools.caCertificates
+    ];
 
-    useDotnetFromEnv = false;
+    extraCommands = ''
+      mkdir -p app
+      cp -r ${spent}/lib/Spent/* app
+    '';
 
-    projectFile = "src/Spent.fsproj";
-    dotnet-sdk = pkgs.dotnetCorePackages.sdk_10_0;
-    dotnet-runtime = pkgs.dotnetCorePackages.runtime_10_0;
-    nugetDeps = ./nix/deps.json;
+    config = {
+      cmd = [ "Spent" ];
+      workingDir = "/app";
+    };
+  };
+
+  packages = {
+    inherit spent;
+  };
+
+  containers = {
+    inherit container;
   };
 in
 {
-  inherit packages;
-  default = packages.spent;
+  default = spent;
+
+  inherit
+    packages
+    containers
+    ;
 
   shell = pkgs.mkShell {
     packages = with pkgs; [
       npins
-      packages.spent
-
       snowflaqe
       fantomas
       fsautocomplete
-      dotnetCorePackages.sdk_10_0
+      dotnet-sdk
     ];
 
     NPINS_DIRECTORY = "nix";
