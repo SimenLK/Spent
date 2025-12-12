@@ -58,9 +58,7 @@ let argParser: Arg<Command> =
                 }
     }
 
-let gql = GraphqlClient settings.gitlabApi
-
-let getWorkItems (group: string) =
+let getWorkItems (gql: GraphqlClient) (group: string) =
     let input: GetWorkItems.InputVariables = { group = group }
     match gql.GetWorkItems input with
     | Ok epics ->
@@ -88,7 +86,9 @@ let executeCommand (_: Threading.CancellationToken) (command: Command) =
     task {
         Log.Logger <- configureSerilog LogEventLevel.Warning
 
-        let workItems = getWorkItems settings.group
+        let gql = GraphqlClient settings.gitlabApi
+        let workItems = getWorkItems gql settings.group
+
         match command with
         | List args ->
             let workItems =
